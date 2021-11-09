@@ -15,12 +15,21 @@ class Person
   end
 
   def can_build?(craft)
-    has_enough = true
-    craft.supplies_required.each do |item, count|
-      if @supplies[supply.to_s] < quantity
-        has_enough = false
-      end
+    craft.supplies_required.all? do |supply, quantity|
+      @supplies[supply.to_s] >= quantity
     end
-    has_enough
+
+    # craft.supplies_required.none? do |supply, quantity|
+    #   @supplies[supply.to_s] < quantity
+    # end
+
+  #   has_enough = true
+  #   craft.supplies_required.each do |item, count|
+  #     if @supplies[supply.to_s] < quantity
+  #       has_enough = false
+  #     end
+  #   end
+  #   has_enough
+
   end
 end
