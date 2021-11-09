@@ -53,4 +53,19 @@ class Event
       craft.supplies_required.keys.include?(supply_string.to_sym)
     end
   end
+
+  def assign_attendees_to_crafts
+    return_value = {}
+    @crafts.each do |craft|
+      return_value[craft] = []
+    end
+    @attendees.each do |person|
+      possible_crafts = @crafts.find_all do |craft|
+        person.can_build?(craft) && person.interests.include?(craft.name)
+      end
+      assigned_craft = possible_crafts.sample
+      return_value[assigned_craft] << person
+    end
+    return_value
+  end
 end
